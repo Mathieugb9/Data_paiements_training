@@ -20,7 +20,6 @@ df = pd.DataFrame({
     ),
     "client": np.random.choice(clients, n),
     "montant": np.round(np.random.exponential(5000, n), 2),
-    "type_de_paiement": np.random.choice(types_de_paiement, n),
     "devise": np.random.choice(devises, n),
     "pays": np.random.choice(pays, n),
     "types_de_paiement": np.random.choice(types_de_paiement, n),
