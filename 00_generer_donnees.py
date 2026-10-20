@@ -25,12 +25,31 @@ df = pd.DataFrame({
     "types_de_paiement": np.random.choice(types_de_paiement, n),
 })
 
-#Creer 15 anomalies dans le dataframe avec des montants elévés , des dates incohérantes , des devise non existantes , prix nuls 
-idx = np.random.choice(df.index, size=15, replace=False)
-df.loc[idx, "montant"] = np.round(np.random.uniform(100000, 1000000, size=15), 2)
-df.loc[idx, "date"] = np.random.choice(pd.date_range(start="2025-01-01", end="2025-12-31"), size=15)
-df.loc[idx, "devise"] = np.random.choice(["XYZ", "ABC", "DEF"], size=15)
-df.loc[idx, "montant"] = 0
+# Créer 5 anomalies distinctes pour chaque type.
+idx_anomalies = np.random.choice(df.index, size=20, replace=False)
+idx_montants_eleves = idx_anomalies[:5]
+idx_dates_incoherentes = idx_anomalies[5:10]
+idx_devises_invalides = idx_anomalies[10:15]
+idx_montants_nuls = idx_anomalies[15:]
+
+df.loc[idx_montants_eleves, "montant"] = np.round(
+    np.random.uniform(100000, 1000000, size=5), 2
+)
+df.loc[idx_dates_incoherentes, "date"] = np.random.choice(
+    pd.date_range(start="2025-01-01", end="2025-12-31"), size=5
+)
+df.loc[idx_devises_invalides, "devise"] = np.random.choice(
+    ["XYZ", "ABC", "DEF"], size=5
+)
+df.loc[idx_montants_nuls, "montant"] = 0
+
+# Créer 5 duplicatas de facture avec des montants et des dates identiques.
+idx_dup = np.random.choice(
+    df.index.difference(idx_anomalies), size=5, replace=False
+)
+df = pd.concat([df, df.loc[idx_dup]], ignore_index=True)
+
+
 
 df.to_csv("transactions.csv", index=False)
 print("Fichier transactions.csv généré avec succès !")
