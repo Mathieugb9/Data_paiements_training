@@ -22,5 +22,6 @@ FROM transactions
 ORDER BY montant ASC
 LIMIT 10;
 
-
-#sqlite3 paiements.db
+-- pour lancer la requête dans le terminal, utilisez la commande suivante : apres avoir installer SQlite3 et avoir créé la base de données paiements.db, 
+--vous pouvez exécuter le fichier requetes.sql en utilisant la commande suivante dans le terminal :
+--sqlite3 paiements.db
